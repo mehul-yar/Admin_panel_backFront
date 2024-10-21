@@ -405,15 +405,15 @@ const SideBar = () => {
           />
           <Box sx={{ textAlign: "center" }}>
             <Typography variant="h3" fontWeight="bold" color={colors.gray[100]}>
-              Tony Stark
+              Admin Panel
             </Typography>
-            <Typography
+            {/* <Typography
               variant="h6"
               fontWeight="500"
               color={colors.greenAccent[500]}
             >
               VP Fancy Admin
-            </Typography>
+            </Typography> */}
           </Box>
         </Box>
       )}
@@ -551,11 +551,6 @@ const SideBar = () => {
         </Menu>
 
 
-
-
-
-
-        
         <Menu
           menuItemStyles={{
             button: {

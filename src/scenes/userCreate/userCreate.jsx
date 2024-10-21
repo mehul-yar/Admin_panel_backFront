@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { tokens } from "../../theme";
 
+
+
 const CreateUserForm = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -57,6 +59,7 @@ const CreateUserForm = () => {
     }
   };
 
+  
   return (
     <Box m="20px">
       <Typography variant="h4" gutterBottom>
@@ -100,9 +103,17 @@ const CreateUserForm = () => {
             onChange={handleChange}
             required
           />
-          <Button type="submit" variant="contained" color="primary">
+          {/* <Button type="submit" variant="contained" color="primary">
             Register User
-          </Button>
+          </Button> */}
+          <Button 
+      type="submit" 
+      variant="contained" 
+      sx={{ backgroundColor: colors.greenAccent[500], "&:hover": { backgroundColor: colors.greenAccent[600] } }}
+    >
+      Register User
+    </Button>
+         
         </Box>
       </form>
 

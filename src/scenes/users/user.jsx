@@ -381,32 +381,32 @@ import { Header } from "../../components";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState, useEffect } from "react";
 import axios from "axios"; 
-import { useTheme } from "@mui/material/styles"; // Ensure this is imported
+import { useTheme } from "@mui/material/styles"; 
 import { tokens } from "../../theme";
 
 const Users = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   
-  // State to store users
+  
   const [users, setUsers] = useState([]);
-  const [open, setOpen] = useState(false); // State for modal
-  const [selectedUser, setSelectedUser] = useState(null); // State for selected user
+  const [open, setOpen] = useState(false); 
+  const [selectedUser, setSelectedUser] = useState(null); 
 
-  // Fetch users from API
+  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem('token'); // Assuming token is stored in localStorage after login
+        const token = localStorage.getItem('token'); 
         const response = await axios.get('http://localhost:3000/api/auth/users', {
           headers: {
-            Authorization: `Bearer ${token}` // Add the token to the request headers
+            Authorization: `Bearer ${token}` 
           }
         });
 
-        // Sort users by createdAt date in descending order
+        
         const sortedUsers = response.data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-        setUsers(sortedUsers); // Set sorted users in state
+        setUsers(sortedUsers); 
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -416,13 +416,13 @@ const Users = () => {
   }, []);
 
   const handleOpen = (user) => {
-    setSelectedUser(user); // Set selected user data
-    setOpen(true); // Open modal
+    setSelectedUser(user); 
+    setOpen(true); 
   };
 
   const handleClose = () => {
-    setOpen(false); // Close modal
-    setSelectedUser(null); // Clear selected user
+    setOpen(false); 
+    setSelectedUser(null); 
   };
 
   const handleUpdate = async () => {
@@ -432,33 +432,44 @@ const Users = () => {
       const response = await axios.put(`http://localhost:3000/api/auth/user/${selectedUser._id}`, selectedUser);
       console.log('User updated successfully:', response.data);
 
-      // Fetch updated users
+     
       const updatedUsers = users.map(user =>
         user._id === selectedUser._id ? response.data : user
       );
 
-      // Sort the updated users again after the update
+      
       const sortedUsers = updatedUsers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setUsers(sortedUsers); // Update users in state
+      setUsers(sortedUsers); 
 
-      handleClose(); // Close modal
+      handleClose();
     } catch (error) {
       console.error('Error updating user:', error);
     }
   };
 
   const columns = [
-    { field: "_id", headerName: "ID", width: 250 },
+    
+    // {
+    //   field: "s_no",
+    //   headerName: "S.No.",
+    //   width: 100,
+    //   valueGetter: (params) => `${params.api.getRowIndex(params.id) + 1}`,
+    // }
+    
+    // ,
+    
     {
       field: "username",
       headerName: "Username",
       flex: 1,
       cellClassName: "name-column--cell",
+      
     },
     {
       field: "email",
       headerName: "Email",
       flex: 1,
+      width: 150,
     },
     { field: "createdAt", headerName: "Created Date", flex: 1 },
     {

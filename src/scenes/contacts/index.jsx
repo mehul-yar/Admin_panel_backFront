@@ -95,9 +95,16 @@ const CreateProductForm = () => {
             value={productData.rating}
             onChange={handleChange}
           />
-          <Button type="submit" variant="contained" color="primary">
+          {/* <Button type="submit" variant="contained" color="primary">
             Create Product
-          </Button>
+          </Button> */}
+          <Button 
+      type="submit" 
+      variant="contained" 
+      sx={{ backgroundColor: colors.greenAccent[500], "&:hover": { backgroundColor: colors.greenAccent[600] } }}
+    >
+      Create Product
+    </Button>
         </Box>
       </form>
 
