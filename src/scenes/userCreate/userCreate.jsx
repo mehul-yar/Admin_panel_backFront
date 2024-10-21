@@ -1,107 +1,111 @@
-
-
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { tokens } from "../../theme";
 
-const CreateProductForm = () => {
+const CreateUserForm = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
-  // State to manage form data
-  const [productData, setProductData] = useState({
-    name: "",
-    price: "",
-    company: "",
-    rating: ""
+  
+  const [userData, setUserData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
   });
 
-  // State to handle success or error messages
+  
   const [message, setMessage] = useState("");
 
-  // Handle input change for form fields
+  
   const handleChange = (e) => {
-    setProductData({
-      ...productData,
+    setUserData({
+      ...userData,
       [e.target.name]: e.target.value,
     });
   };
 
-  // Handle form submission
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage(""); // Clear message before making request
+    setMessage(""); 
+
+   
+    if (userData.password !== userData.confirmPassword) {
+      setMessage("Passwords do not match.");
+      return;
+    }
 
     try {
-      // Send a POST request to create the product
-      const response = await axios.post("http://localhost:3000/api/auth/product", productData);
+      
+      const response = await axios.post("http://localhost:3000/api/auth/register", userData);
 
-      // Set success message
-      setMessage("Product created successfully!");
+     
+      setMessage("User registered successfully!");
 
-      // Clear the form data after successful creation
-      setProductData({
-        name: "",
-        price: "",
-        company: "",
-        rating: ""
+      
+      setUserData({
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
       });
     } catch (error) {
-     
-      console.error("Error creating product:", error);
-      setMessage("Failed to create product. Please try again.");
+      console.error("Error creating user:", error);
+      setMessage("Failed to register user. Please try again.");
     }
   };
 
   return (
     <Box m="20px">
       <Typography variant="h4" gutterBottom>
-        Create New Product
+        Register New User
       </Typography>
 
       <form onSubmit={handleSubmit}>
         <Box display="flex" flexDirection="column" gap={2}>
           <TextField
-            label="Product Name"
+            label="Username"
             variant="outlined"
-            name="name"
-            value={productData.name}
+            name="username"
+            value={userData.username}
             onChange={handleChange}
             required
           />
           <TextField
-            label="Price"
+            label="Email"
             variant="outlined"
-            name="price"
-            type="number"
-            value={productData.price}
+            name="email"
+            type="email"
+            value={userData.email}
             onChange={handleChange}
             required
           />
           <TextField
-            label="Company"
+            label="Password"
             variant="outlined"
-            name="company"
-            value={productData.company}
+            name="password"
+            type="password"
+            value={userData.password}
             onChange={handleChange}
             required
           />
           <TextField
-            label="Rating"
+            label="Confirm Password"
             variant="outlined"
-            name="rating"
-            type="number"
-            value={productData.rating}
+            name="confirmPassword"
+            type="password"
+            value={userData.confirmPassword}
             onChange={handleChange}
+            required
           />
           <Button type="submit" variant="contained" color="primary">
-            Create Product
+            Register User
           </Button>
         </Box>
       </form>
 
-      
       {message && (
         <Typography
           color={message.includes("successfully") ? "green" : "red"}
@@ -114,4 +118,6 @@ const CreateProductForm = () => {
   );
 };
 
-export default CreateProductForm;
+export default CreateUserForm;
+
+

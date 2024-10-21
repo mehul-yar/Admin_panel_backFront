@@ -1,10 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import AppRouter from './Router';
-import './index.css';
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import AppRouter from './Router';
+// import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-    <React.StrictMode>
-        <AppRouter />
-    </React.StrictMode>
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//     <React.StrictMode>
+//         <AppRouter />
+//     </React.StrictMode>
+// );
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+
+ReactDOM.render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root')
 );
