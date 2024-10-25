@@ -117,7 +117,9 @@ import Line from "./scenes/line";
 import Geography from "./scenes/geography";
 import Stream from "./scenes/stream";
 import Users from "./scenes/users/user"
-import UserCreate from "./scenes/userCreate/userCreate"
+import UserCreate from "./scenes/userCreate/userCreate";
+// import Blogs from "./scenes/calendar/blogs";
+// import BlogViewer from "./scenes/calendar/index";
 import axios from 'axios';
 
 export const AuthContext = createContext(null);
@@ -182,6 +184,8 @@ function App() {
                       <Route path="invoices" element={<Invoices />} />
                       <Route path="form" element={<Form />} />
                       <Route path="calendar" element={<Calendar />} />
+                      {/* <Route path="blogs" element={<Blogs />} /> */}
+                      {/* <Route path="blogViewer" element={<BlogViewer />} /> */}
                       <Route path="faq" element={<Faq />} />
                       <Route path="bar" element={<Bar />} />
                       <Route path="pie" element={<Pie />} />

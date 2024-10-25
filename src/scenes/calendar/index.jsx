@@ -1,148 +1,165 @@
+
+
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Box,
-  List,
-  ListItem,
-  ListItemText,
+  Button,
+  TextField,
   Typography,
-  useMediaQuery,
+  IconButton,
   useTheme,
 } from "@mui/material";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import listPlugin from "@fullcalendar/list";
-import { tokens } from "../../theme";
-import { useState } from "react";
-import { Header } from "../../components";
-import { formatDate } from "@fullcalendar/core";
+import { Add } from "@mui/icons-material";
+import { tokens } from "../../theme"; // Assuming tokens are used for custom theme colors
 
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const isMdDevices = useMediaQuery("(max-width:920px)");
-  const isSmDevices = useMediaQuery("(max-width:600px)");
-  const isXsDevices = useMediaQuery("(max-width:380px)");
-  const [currentEvents, setCurrentEvents] = useState([]);
 
-  const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
-    const calendarApi = selected.view.calendar;
-    calendarApi.unselect();
+  const [title, setTitle] = useState("");
+  const [intro, setIntro] = useState("");
+  const [content, setContent] = useState("");
+  const [image, setImage] = useState(null);
+  const [points, setPoints] = useState([""]);
 
-    if (title) {
-      calendarApi.addEvent({
-        id: `${selected.dateStr}-${title}`,
-        title,
-        start: selected.startStr,
-        end: selected.endStr,
-        allDay: selected.allDay,
+  useEffect(() => {
+    const fetchBlogData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/auth/blog");
+        const data = response.data;
+        setTitle(data.title);
+        setIntro(data.intro);
+        setContent(data.content);
+        setImage(data.image);
+        setPoints(data.points || [""]);
+      } catch (error) {
+        console.error("Error fetching blog data:", error);
+      }
+    };
+    fetchBlogData();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const blogData = { title, intro, content, points };
+
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      Object.keys(blogData).forEach((key) =>
+        formData.append(key, blogData[key])
+      );
+      await axios.put("http://localhost:3000/api/auth/blogs/main", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
+      alert("Blog updated successfully!");
+    } catch (error) {
+      console.error("Error updating blog:", error);
     }
   };
 
-  const handleEventClick = (selected) => {
-    if (
-      window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
-      )
-    ) {
-      selected.event.remove();
-    }
+  const handleAddPoint = () => setPoints([...points, ""]);
+
+  const handlePointChange = (index, value) => {
+    const updatedPoints = points.slice();
+    updatedPoints[index] = value;
+    setPoints(updatedPoints);
   };
+
   return (
-    <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
-      <Box display="flex" justifyContent="space-between" gap={2}>
-        {/* CALENDAR SIDEBAR */}
-        <Box
-          display={`${isMdDevices ? "none" : "block"}`}
-          flex="1 1 20%"
-          bgcolor={colors.primary[400]}
-          p="15px"
-          borderRadius="4px"
-        >
-          <Typography variant="h5">Events</Typography>
-          <List>
-            {currentEvents.map((event) => (
-              <ListItem
-                key={event.id}
-                sx={{
-                  bgcolor: `${colors.greenAccent[500]}`,
-                  my: "10px",
-                  borderRadius: "2px",
-                }}
-              >
-                <ListItemText
-                  primary={event.title}
-                  secondary={
-                    <Typography>
-                      {formatDate(event.start, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
-          </List>
-        </Box>
+    <Box
+      m="20px"
+      p="20px"
+      maxWidth="800px"
+      bgcolor={colors.primary[400]}
+      borderRadius="8px"
+      boxShadow="0 4px 10px rgba(0,0,0,0.1)"
+    >
+      <Typography variant="h4" color={colors.greenAccent[500]} gutterBottom align="center">
+        Admin Blog Editor
+      </Typography>
 
-        {/* CALENDAR */}
-        <Box
-          flex="1 1 100%"
-          sx={{
-            "& .fc-list-day-cushion ": {
-              bgcolor: `${colors.greenAccent[500]} !important`,
-            },
-          }}
-        >
-          <FullCalendar
-            height="75vh"
-            plugins={[
-              dayGridPlugin,
-              timeGridPlugin,
-              interactionPlugin,
-              listPlugin,
-            ]}
-            headerToolbar={{
-              left: `${isSmDevices ? "prev,next" : "prev,next today"}`,
-              center: "title",
-              right: `${
-                isXsDevices
-                  ? ""
-                  : isSmDevices
-                  ? "dayGridMonth,listMonth"
-                  : "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
-              }`,
-            }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            select={handleDateClick}
-            eventClick={handleEventClick}
-            eventsSet={(events) => setCurrentEvents(events)}
-            initialEvents={[
-              {
-                id: "12315",
-                title: "All-day event",
-                date: "2024-02-27",
-              },
-              {
-                id: "5123",
-                title: "Timed event",
-                date: "2024-02-29",
-              },
-            ]}
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Blog Title"
+          fullWidth
+          variant="outlined"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          margin="normal"
+        />
+
+        <TextField
+          label="Intro Paragraph"
+          fullWidth
+          variant="outlined"
+          multiline
+          value={intro}
+          onChange={(e) => setIntro(e.target.value)}
+          margin="normal"
+        />
+
+        <TextField
+          label="Content"
+          fullWidth
+          variant="outlined"
+          multiline
+          rows={6}
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          margin="normal"
+        />
+
+        <Box mt={2}>
+          <Typography variant="body1" fontWeight="bold" gutterBottom>
+            Image
+          </Typography>
+          <input
+            type="file"
+            onChange={(e) => setImage(e.target.files[0])}
+            style={{ marginTop: "10px" }}
           />
         </Box>
-      </Box>
+
+        <Box mt={4}>
+          <Typography variant="body1" fontWeight="bold" gutterBottom>
+            Key Points
+          </Typography>
+          {points.map((point, index) => (
+            <TextField
+              key={index}
+              fullWidth
+              variant="outlined"
+              value={point}
+              onChange={(e) => handlePointChange(index, e.target.value)}
+              margin="dense"
+              placeholder={`Point ${index + 1}`}
+            />
+          ))}
+          <IconButton onClick={handleAddPoint} color="primary">
+            <Add /> Add another point
+          </IconButton>
+        </Box>
+
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ mt: 3, bgcolor: colors.greenAccent[600] }}
+        >
+          Save Changes
+        </Button>
+      </form>
     </Box>
   );
 };
 
 export default Calendar;
+
+
+
+
+
+

@@ -38,6 +38,8 @@ const express = require('express');
 const { register, login, logout, getAllUsers } = require('../controllers/authController');
 const { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('../controllers/authProduct');
 const { protect } = require('../middleware/authMiddleware');
+const blogController = require("../controllers/blogController");
+const multer = require("multer");
 
 const router = express.Router();
 
@@ -57,5 +59,21 @@ router.delete('/product/:id', deleteProduct);
 
 
 router.get('/users', protect, getAllUsers);
+
+///// blog content /////////
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => cb(null, "uploads/"), // Adjust path as needed
+    filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+});
+const upload = multer({ storage });
+
+// Route to get blog data
+router.get("/blog", blogController.getBlog);
+
+// Route to update blog data with image upload
+router.put("/blogs/main", upload.single("image"), blogController.updateBlog);
+
+///// blog content /////////
 
 module.exports = router;
