@@ -118,8 +118,7 @@ import Geography from "./scenes/geography";
 import Stream from "./scenes/stream";
 import Users from "./scenes/users/user"
 import UserCreate from "./scenes/userCreate/userCreate";
-// import Blogs from "./scenes/calendar/blogs";
-// import BlogViewer from "./scenes/calendar/index";
+import Email from "./scenes/email/email"
 import axios from 'axios';
 
 export const AuthContext = createContext(null);
@@ -129,7 +128,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const [toggled, setToggled] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // Loading state to prevent flickering
+  const [isLoading, setIsLoading] = useState(true); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -142,15 +141,14 @@ function App() {
       navigate("/login");
     }
 
-    // Set loading to false once the authentication check is done
     setIsLoading(false);
   }, [navigate]);
 
   const values = { toggled, setToggled };
 
-  // Display a loading screen until authentication check is complete
+  
   if (isLoading) {
-    return <div>Loading...</div>;  // You can customize this with a spinner or loader
+    return <div>Loading...</div>;  
   }
 
   return (
@@ -184,8 +182,7 @@ function App() {
                       <Route path="invoices" element={<Invoices />} />
                       <Route path="form" element={<Form />} />
                       <Route path="calendar" element={<Calendar />} />
-                      {/* <Route path="blogs" element={<Blogs />} /> */}
-                      {/* <Route path="blogViewer" element={<BlogViewer />} /> */}
+                      <Route path="email" element={<Email/>}/>
                       <Route path="faq" element={<Faq />} />
                       <Route path="bar" element={<Bar />} />
                       <Route path="pie" element={<Pie />} />

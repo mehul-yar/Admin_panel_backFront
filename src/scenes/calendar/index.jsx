@@ -11,7 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { tokens } from "../../theme"; // Assuming tokens are used for custom theme colors
+import { tokens } from "../../theme"; 
 
 const Calendar = () => {
   const theme = useTheme();
@@ -42,14 +42,17 @@ const Calendar = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const blogData = { title, intro, content, points };
-
+    const blogData = { title, intro, content };
+  
     try {
       const formData = new FormData();
       formData.append("image", image);
-      Object.keys(blogData).forEach((key) =>
-        formData.append(key, blogData[key])
-      );
+      Object.keys(blogData).forEach((key) => formData.append(key, blogData[key]));
+  
+      points.forEach((point, index) => {
+        formData.append(`points[${index}]`, point);
+      });
+  
       await axios.put("http://localhost:3000/api/auth/blogs/main", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -58,6 +61,8 @@ const Calendar = () => {
       console.error("Error updating blog:", error);
     }
   };
+  
+  
 
   const handleAddPoint = () => setPoints([...points, ""]);
 

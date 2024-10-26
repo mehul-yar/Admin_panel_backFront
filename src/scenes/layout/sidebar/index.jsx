@@ -645,68 +645,13 @@ const SideBar = () => {
             colors={colors}
             icon={<CalendarTodayOutlined />}
           />
-          {/* <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
-        >
-          
-          <SubMenu
-  label="Blog"
-  icon={<PeopleAltOutlined />}
-  rootStyles={{
-    button: {
-      backgroundColor: colors.gray[100], 
-      ":hover": { backgroundColor: colors.primary[500] }, 
-    },
-    subMenuContent: {
-      backgroundColor: colors.gray[100], 
-    },
-  }}
-  
->
-  <MenuItem
-    rootStyles={{
-      backgroundColor: colors.primary[400],
-      button: {
-        backgroundColor: colors.gray[100], 
-        ":hover": { backgroundColor: colors.primary[500] }, 
-      },
-    }}
-  >
-    <Item
-      title="Blog Viewer"
-      path="/blogs"
-      colors={colors}
-      icon={<PeopleAltOutlined />}
-    />
-  </MenuItem>
-  <MenuItem
-    rootStyles={{
-      backgroundColor: colors.primary[400],
-      button: {
-        backgroundColor: colors.gray[100], 
-        ":hover": { backgroundColor: colors.primary[500] }, 
-      },
-    }}
-    
-  >
-    <Item
-      title="Update Blog"
-      path="/calendar"
-      colors={colors}
-      icon={<ContactsOutlined />}
-    />
-  </MenuItem>
-</SubMenu>
 
-        </Menu> */}
+<Item
+            title="Contact"
+            path="/Email"
+            colors={colors}
+            icon={<CalendarTodayOutlined />}
+          />
 
           <Item
             title="FAQ Page"
