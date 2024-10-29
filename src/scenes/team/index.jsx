@@ -295,8 +295,8 @@ const Team = () => {
     { field: "createdAt", headerName: "Created Date", flex: 1 },
     { field: "rating", headerName: "Rating", flex: 1 },
     {
-      field: "company",
-      headerName: "Company",
+      field: "size",
+      headerName: "Size",
       flex: 1,
     },
     {
@@ -401,12 +401,12 @@ const Team = () => {
           />
           <TextField
             margin="dense"
-            label="Company"
+            label="Size"
             type="text"
             fullWidth
             variant="standard"
-            value={selectedProduct ? selectedProduct.company : ''}
-            onChange={(e) => setSelectedProduct({ ...selectedProduct, company: e.target.value })}
+            value={selectedProduct ? selectedProduct.size : ''}
+            onChange={(e) => setSelectedProduct({ ...selectedProduct, size: e.target.value })}
           />
           <TextField
             margin="dense"
@@ -416,6 +416,15 @@ const Team = () => {
             variant="standard"
             value={selectedProduct ? selectedProduct.rating : ''}
             onChange={(e) => setSelectedProduct({ ...selectedProduct, rating: e.target.value })}
+          />
+           <TextField
+            margin="dense"
+            label="productDetails"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={selectedProduct ? selectedProduct.productDetails : ''}
+            onChange={(e) => setSelectedProduct({ ...selectedProduct, productDetails: e.target.value })}
           />
         </DialogContent>
         <DialogActions>
