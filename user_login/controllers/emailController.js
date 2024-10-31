@@ -47,11 +47,10 @@ const sendMessage = async (req, res) => {
     const { name, email, message } = req.body;
 
     try {
-        // Save message to the database
+
         const newMessage = new Message({ name, email, message });
         await newMessage.save();
 
-        // Send email to admin
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {

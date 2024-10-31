@@ -48,19 +48,7 @@
 
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const multer = require('multer');
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const uploadPath = path.join(__dirname, "../uploads");
-        cb(null, uploadPath);
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname);
-    },
-});
-
-const upload = multer({ storage });
 
 const protect = async (req, res, next) => {
     let token;
@@ -83,4 +71,5 @@ const protect = async (req, res, next) => {
     }
 };
 
-module.exports = { protect, upload };
+module.exports = { protect };
+
