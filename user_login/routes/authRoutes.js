@@ -107,14 +107,15 @@
 
 
 
-// routes file (e.g., routes/blogRoutes.js)
+
 const express = require('express');
 const { register, login, logout, getAllUsers } = require('../controllers/authController');
 const { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('../controllers/authProduct');
 const { protect } = require('../middleware/authMiddleware');
 const blogController = require("../controllers/blogController");
 const { sendMessage, getMessages } = require('../controllers/emailController');
-const { upload } = require("../middleware/blogMiddleware"); // Import upload middleware
+// const { upload } = require("../middleware/blogMiddleware");
+const { upload } = require('../middleware/productMulter');
 
 const router = express.Router();
 
@@ -124,11 +125,14 @@ router.post('/login', login);
 router.post('/logout', logout);
 
 // Product routes
-router.post('/product', createProduct);
+// router.post('/product', createProduct);
 router.get('/products', getAllProducts);
 router.get('/product/:id', getProductById);
-router.put('/product/:id', updateProduct);
+// router.put('/product/:id', updateProduct);
 router.delete('/product/:id', deleteProduct);
+
+router.post('/product', upload.single('image'), createProduct);
+router.put('/product/:id', upload.single('image'), updateProduct);
 
 // User routes
 router.get('/users', protect, getAllUsers);

@@ -151,7 +151,8 @@ const CreateProductForm = () => {
     company: "",
     rating: "",
     size: "",
-    productDetails: ""
+    productDetails: "",
+    image: null
   });
 
   // State to handle success or error messages
@@ -166,32 +167,82 @@ const CreateProductForm = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    setProductData((prevData) => ({
+      ...prevData,
+      image: e.target.files[0], // Store the selected file
+    }));
+  };
+
   // Handle form submission
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setMessage(""); // Clear message before making request
+
+  //   try {
+  //     // Send a POST request to create the product
+  //     const response = await axios.post("http://localhost:3000/api/auth/product", productData);
+
+  //     // Set success message
+  //     setMessage("Product created successfully!");
+
+  //     // Clear the form data after successful creation
+  //     setProductData({
+  //       name: "",
+  //       price: "",
+  //       company: "",
+  //       rating: "",
+  //       size: "",
+  //       productDetails: "",
+  //       image: null
+  //     });
+  //   } catch (error) {
+  //     console.error("Error creating product:", error);
+  //     setMessage("Failed to create product. Please try again.");
+  //   }
+  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(""); // Clear message before making request
 
-    try {
-      // Send a POST request to create the product
-      const response = await axios.post("http://localhost:3000/api/auth/product", productData);
-
-      // Set success message
-      setMessage("Product created successfully!");
-
-      // Clear the form data after successful creation
-      setProductData({
-        name: "",
-        price: "",
-        company: "",
-        rating: "",
-        size: "",
-        productDetails: ""
-      });
-    } catch (error) {
-      console.error("Error creating product:", error);
-      setMessage("Failed to create product. Please try again.");
+    const formData = new FormData();
+    formData.append("name", productData.name);
+    formData.append("price", productData.price);
+    formData.append("company", productData.company);
+    formData.append("rating", productData.rating);
+    formData.append("size", productData.size);
+    formData.append("productDetails", productData.productDetails);
+    if (productData.image) {
+        formData.append("image", productData.image);
     }
-  };
+
+    try {
+        // Send a POST request to create the product with the image
+        const response = await axios.post("http://localhost:3000/api/auth/product", formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+
+        // Set success message
+        setMessage("Product created successfully!");
+
+        // Clear the form data after successful creation
+        setProductData({
+            name: "",
+            price: "",
+            company: "",
+            rating: "",
+            size: "",
+            productDetails: "",
+            image: null
+        });
+    } catch (error) {
+        console.error("Error creating product:", error);
+        setMessage("Failed to create product. Please try again.");
+    }
+};
+
 
   return (
     <Box m="20px">
@@ -218,6 +269,16 @@ const CreateProductForm = () => {
             onChange={handleChange}
             required
           />
+          <Button variant="contained" component="label">
+            Upload Image
+            <input
+              type="file"
+              hidden
+              onChange={handleImageChange}
+              accept="image/*"
+            />
+          </Button>
+         
           {/* <TextField
             label="Company"
             variant="outlined"

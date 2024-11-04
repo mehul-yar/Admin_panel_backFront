@@ -23,11 +23,23 @@ const getProductById = async (req, res) => {
     }
 };
 
-const createProduct = async (req, res) => {
-    console.log(req.body);
+// const createProduct = async (req, res) => {
+//     console.log(req.body);
 
+//     try {
+//         const product = await Product.create(req.body);
+//         res.status(201).json({ success: true, data: product });
+//     } catch (error) {
+//         res.status(400).json({ success: false, message: error.message });
+//     }
+// };
+const createProduct = async (req, res) => {
     try {
-        const product = await Product.create(req.body);
+        const productData = { ...req.body };
+        if (req.file) {
+            productData.image = req.file.path; // Save image path to the database
+        }
+        const product = await Product.create(productData);
         res.status(201).json({ success: true, data: product });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
@@ -35,22 +47,42 @@ const createProduct = async (req, res) => {
 };
 
 
+// const updateProduct = async (req, res) => {
+//     try {
+//         const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+//             new: true,
+//             runValidators: true
+//         });
+
+//         if (!product) {
+//             return res.status(404).json({ success: false, message: "Product not found" });
+//         }
+
+//         res.status(200).json({ success: true, data: product });
+//     } catch (error) {
+//         res.status(400).json({ success: false, message: error.message });
+//     }
+// };
+
 const updateProduct = async (req, res) => {
     try {
-        const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+        const updateData = { ...req.body };
+        if (req.file) {
+            updateData.image = req.file.path; // Update image path in the database
+        }
+        const product = await Product.findByIdAndUpdate(req.params.id, updateData, {
             new: true,
-            runValidators: true
+            runValidators: true,
         });
-
         if (!product) {
             return res.status(404).json({ success: false, message: "Product not found" });
         }
-
         res.status(200).json({ success: true, data: product });
     } catch (error) {
         res.status(400).json({ success: false, message: error.message });
     }
 };
+
 
 const deleteProduct = async (req, res) => {
     try {

@@ -74,6 +74,7 @@ const productSchema = new mongoose.Schema({
         type: String,
         default: "No details available",
     },
+    image: { type: String, default: null },
 });
 
 module.exports = mongoose.model('Product', productSchema);

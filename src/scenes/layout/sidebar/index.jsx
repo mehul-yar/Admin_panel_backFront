@@ -300,7 +300,8 @@
 import { Avatar, Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import { tokens } from "../../../theme";
-import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar"; // Import SubMenu for dropdown functionality
+import { Menu, MenuItem, Sidebar, SubMenu } from "react-pro-sidebar"; 
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import {
   BarChartOutlined,
   CalendarTodayOutlined,
@@ -315,6 +316,7 @@ import {
   ReceiptOutlined,
   TimelineOutlined,
   WavesOutlined,
+  
 } from "@mui/icons-material";
 import avatar from "../../../assets/images/avatar.png";
 import logo from "../../../assets/images/logo.png";
@@ -565,7 +567,7 @@ const SideBar = () => {
           
           <SubMenu
   label="Product"
-  icon={<PeopleAltOutlined />}
+  icon={<ProductionQuantityLimitsIcon />}
   rootStyles={{
     button: {
       backgroundColor: colors.gray[100], 
