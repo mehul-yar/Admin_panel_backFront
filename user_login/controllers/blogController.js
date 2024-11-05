@@ -55,8 +55,8 @@ exports.updateBlog = async (req, res) => {
         const { title, intro, content, points } = req.body;
         let image = req.file ? req.file.path : req.body.image;
 
-        // Ensure content preserves line breaks
-        const formattedContent = content.replace(/\n/g, '<br />'); // Replace new lines with <br> for HTML rendering
+
+        const formattedContent = content.replace(/\n/g, '<br />');
 
         const updatedBlog = await Blog.findOneAndUpdate(
             {},
@@ -69,3 +69,4 @@ exports.updateBlog = async (req, res) => {
         res.status(500).json({ error: "Failed to update blog data" });
     }
 };
+

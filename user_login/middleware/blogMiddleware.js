@@ -35,21 +35,21 @@
 
 
 
-// middleware.js
+
 const multer = require("multer");
 const path = require("path");
 
-// Set up storage configuration for multer
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "uploads/"); // Specify the uploads folder
+        cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname); // Create a unique filename
+        cb(null, Date.now() + "-" + file.originalname);
     }
 });
 
-// Initialize multer with the defined storage
+
 const upload = multer({ storage });
 
 module.exports = {
