@@ -119,6 +119,7 @@ import Stream from "./scenes/stream";
 import Users from "./scenes/users/user"
 import UserCreate from "./scenes/userCreate/userCreate";
 import Email from "./scenes/email/email"
+import LatestPost from "./home/latestPost";
 import axios from 'axios';
 
 export const AuthContext = createContext(null);
@@ -183,6 +184,7 @@ function App() {
                       <Route path="form" element={<Form />} />
                       <Route path="calendar" element={<Calendar />} />
                       <Route path="email" element={<Email/>}/>
+                      <Route path="/latestPost" element={<LatestPost/>}/>
                       <Route path="faq" element={<Faq />} />
                       <Route path="bar" element={<Bar />} />
                       <Route path="pie" element={<Pie />} />

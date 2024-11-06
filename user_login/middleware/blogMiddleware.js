@@ -1,35 +1,36 @@
-// // middleware.js
+
+
+
 // const multer = require("multer");
 // const path = require("path");
 
-// // Set up storage configuration
+
 // const storage = multer.diskStorage({
 //     destination: (req, file, cb) => {
-//         cb(null, "uploads/");  // Folder where images will be stored
+//         cb(null, "uploads/");
 //     },
 //     filename: (req, file, cb) => {
-//         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9);
-//         cb(null, uniqueSuffix + path.extname(file.originalname));  // Create unique filename
+//         cb(null, Date.now() + "-" + file.originalname);
 //     }
 // });
 
-// // Filter to allow only image files
-// const fileFilter = (req, file, cb) => {
-//     if (file.mimetype.startsWith("image/")) {
-//         cb(null, true);
-//     } else {
-//         cb(new Error("Only image files are allowed!"), false);
-//     }
+
+// const upload = multer({ storage });
+
+// module.exports = {
+//     upload
 // };
 
-// // Configure multer middleware
-// const upload = multer({
-//     storage: storage,
-//     limits: { fileSize: 5 * 1024 * 1024 }, // Set file size limit (5 MB)
-//     fileFilter: fileFilter
-// });
 
-// module.exports = upload;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -39,19 +40,28 @@
 const multer = require("multer");
 const path = require("path");
 
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "uploads/");
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now() + "-" + file.originalname);
+        const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9) + path.extname(file.originalname);
+        cb(null, uniqueSuffix);
     }
 });
 
-
-const upload = multer({ storage });
-
-module.exports = {
-    upload
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) {
+        cb(null, true);
+    } else {
+        cb(new Error("Only image files are allowed!"), false);
+    }
 };
+
+const upload = multer({
+    storage: storage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
+    fileFilter: fileFilter
+});
+
+module.exports = { upload };
