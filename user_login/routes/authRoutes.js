@@ -234,9 +234,9 @@ router.put('/posts/:id', upload.single('image'), updatePost);  // Update existin
 router.delete('/posts/:id', deletePost);  // Delete post
 
 // Cart routes - Protect these routes with the 'protect' middleware
-router.post('/cart/add', protect, cartController.addToCart);  // Use protect here
-router.get('/cart', protect, cartController.getCart);  // Use protect here
-router.put('/cart/update', protect, cartController.updateCartItem);  // Use protect here
-router.delete('/cart/remove', protect, cartController.removeFromCart);  // Use protect here
+router.post('/cart/add', protect, cartController.addToCart);
+router.get('/cart', protect, cartController.getCart);
+router.put('/cart/update', protect, cartController.updateCartItem);
+router.delete('/cart/remove', protect, cartController.removeFromCart);
 
 module.exports = router;

@@ -189,28 +189,27 @@
 
 
 const Cart = require('../models/Cart');
-const Product = require('../models/Product');
+const Product = require('../models/product');
 
 // Add item to cart
 exports.addToCart = async (req, res) => {
     const { productId, quantity = 1 } = req.body;
-    const userId = req.user.id; // req.user should be set by authMiddleware
+    const userId = req.user.id;
 
     try {
         let cart = await Cart.findOne({ user: userId });
 
-        // If cart doesn't exist, create a new one
+
         if (!cart) {
             cart = new Cart({ user: userId, items: [] });
         }
 
-        // Check if product is valid and exists in the Product collection
         const product = await Product.findById(productId);
         if (!product) {
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
 
-        // Check if the product already exists in the cart
+
         const existingItem = cart.items.find(item => item.product.toString() === productId);
 
         if (existingItem) {
