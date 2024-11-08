@@ -642,7 +642,7 @@ const SideBar = () => {
             icon={<PersonOutlined />}
           />
           <Item
-            title="Latest Posts"
+            title="Testimonials"
             path="/latestPost"
             colors={colors}
             icon={<CalendarTodayOutlined />}
