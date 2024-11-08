@@ -449,46 +449,7 @@ const SideBar = () => {
         </Typography>
 
 
-        {/* <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
-        >
-          <Item
-            title="Users"
-            path="/users" 
-            colors={colors}
-            icon={<DashboardOutlined />}
-          />
-        </Menu>
-
-        <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
-        >
-          <Item
-            title="UserCreate"
-            path="/userCreate" 
-            colors={colors}
-            icon={<DashboardOutlined />}
-          />
-        </Menu> */}
-
-
-
+       
         <Menu
           menuItemStyles={{
             button: {

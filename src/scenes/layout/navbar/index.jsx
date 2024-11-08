@@ -539,7 +539,7 @@ const Navbar = () => {
           }}
         >
           <Box p={2} sx={{ width: 250 }}>
-            {/* User Profile Image */}
+            
             <Box display="flex" alignItems="center" justifyContent="center" mb={2}>
               <Avatar
                 alt="avatar"
