@@ -285,6 +285,7 @@ const {
 const cartController = require('../controllers/cartController');
 const testimonialController = require('../controllers/testimonialController');
 const reviewController = require('../controllers/reviewController');  // Import the review controller
+const { getUserProfile, updateUserProfile } = require('../controllers/authProfile');
 
 
 
@@ -341,6 +342,10 @@ router.get('/testi', testimonialController.getAllTestimonials);
 // Review routes (added here)
 router.post('/review', protect, reviewController.createReview);  // Only logged-in users can post reviews
 router.get('/reviews/:productId', reviewController.getReviewsForProduct);  // Get reviews for a product
+
+// user profile 
+router.get('/profile', protect, getUserProfile);
+router.put('/profile', protect, updateUserProfile);
 
 
 module.exports = router;
