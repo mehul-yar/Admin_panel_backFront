@@ -295,43 +295,7 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/product');
 
-// Add item to cart
-// exports.addToCart = async (req, res) => {
-//     const { productId, quantity = 1 } = req.body;
-//     const userId = req.user.id;
 
-//     try {
-//         let cart = await Cart.findOne({ user: userId });
-
-//         if (!cart) {
-//             cart = new Cart({ user: userId, items: [] });
-//         }
-
-//         const product = await Product.findById(productId);
-//         if (!product) {
-//             return res.status(404).json({ success: false, message: 'Product not found' }); // Return here to stop further execution
-//         }
-
-//         const existingItem = cart.items.find(item => item.product.toString() === productId);
-
-//         if (existingItem) {
-//             // Update quantity if product already exists
-//             existingItem.quantity += quantity;
-//         } else {
-//             // Add new product to cart
-//             cart.items.push({ product: productId, quantity });
-//         }
-
-//         await cart.save();
-//         return res.status(200).json({ success: true, cart }); // Return after sending response
-
-//     } catch (error) {
-//         console.error(error);
-//         if (!res.headersSent) { // Check if headers have already been sent
-//             return res.status(500).json({ success: false, message: error.message });
-//         }
-//     }
-// };
 exports.addToCart = async (req, res) => {
     const { productId, quantity = 1 } = req.body;
     const userId = req.user.id;
@@ -340,39 +304,32 @@ exports.addToCart = async (req, res) => {
         // Find the user's cart
         let cart = await Cart.findOne({ user: userId });
 
+
         if (!cart) {
-            // If cart does not exist, create a new one
             cart = new Cart({ user: userId, items: [] });
+
         }
 
-        // Find the product by its ID
         const product = await Product.findById(productId);
         if (!product) {
-            // Return error response if product is not found
             return res.status(404).json({ success: false, message: 'Product not found' });
         }
 
-        // Check if the product already exists in the cart
         const existingItem = cart.items.find(item => item.product.toString() === productId);
 
         if (existingItem) {
-            // If the product is already in the cart, update the quantity
             existingItem.quantity += quantity;
         } else {
-            // Add the new product to the cart
             cart.items.push({ product: productId, quantity });
         }
 
-        // Save the updated cart to the database
         await cart.save();
 
-        // Send the success response after saving the cart
         return res.status(200).json({ success: true, cart });
 
     } catch (error) {
         console.error('Error in addToCart:', error);
 
-        // Ensure that we don't send multiple responses
         if (!res.headersSent) {
             return res.status(500).json({ success: false, message: error.message });
         }

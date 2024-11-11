@@ -164,15 +164,27 @@ const createReview = async (req, res) => {
 };
 
 
+// const getReviewsForProduct = async (req, res) => {
+//     try {
+//         const reviews = await Review.find({ product: req.params.productId }).populate('user', 'name');
+//         res.status(200).json(reviews);
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// };
 const getReviewsForProduct = async (req, res) => {
     try {
         const reviews = await Review.find({ product: req.params.productId }).populate('user', 'name');
-        res.status(200).json(reviews);
+
+        // Return reviews inside an object with a 'reviews' key
+        res.status(200).json({ reviews });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
 };
+
 
 module.exports = {
     createReview,
