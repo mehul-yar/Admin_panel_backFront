@@ -286,6 +286,8 @@ const cartController = require('../controllers/cartController');
 const testimonialController = require('../controllers/testimonialController');
 const reviewController = require('../controllers/reviewController');  // Import the review controller
 const { getUserProfile, updateUserProfile } = require('../controllers/authProfile');
+const { addToWishlist, getWishlist, removeFromWishlist } = require('../controllers/wishlistController');
+
 
 
 
@@ -346,6 +348,11 @@ router.get('/reviews/:productId', reviewController.getReviewsForProduct);  // Ge
 // user profile 
 router.get('/profile', protect, getUserProfile);
 router.put('/profile', protect, updateUserProfile);
+
+
+router.post('/wishlist/add', protect, addToWishlist);
+router.get('/wishlist', protect, getWishlist);
+router.delete('/wishlist/remove', protect, removeFromWishlist);
 
 
 module.exports = router;
