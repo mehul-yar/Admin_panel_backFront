@@ -90,6 +90,7 @@ exports.updateCartItem = async (req, res) => {
 
 
 
+
 exports.removeFromCart = async (req, res) => {
     const { productId } = req.body;
     const userId = req.user.id;
