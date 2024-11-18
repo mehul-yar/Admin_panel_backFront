@@ -302,6 +302,9 @@ router.post('/logout', logout);
 router.get('/products', getAllProducts);
 router.get('/product/:id', getProductById);
 router.post('/product', upload.single('image'), createProduct);
+
+// router.post('/product', upload.array('images', 5), createProduct);
+
 router.put('/product/:id', upload.single('image'), updateProduct);
 router.delete('/product/:id', deleteProduct);
 

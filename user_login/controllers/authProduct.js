@@ -38,7 +38,7 @@ const createProduct = async (req, res) => {
     try {
         const productData = { ...req.body };
         if (req.file) {
-            productData.image = req.file.path; // Save image path to the database
+            productData.image = req.file.path;
         }
         const product = await Product.create(productData);
         res.status(201).json({ success: true, data: product });
@@ -106,3 +106,31 @@ module.exports = {
     updateProduct,
     deleteProduct,
 };
+
+//////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
