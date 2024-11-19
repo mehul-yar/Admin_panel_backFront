@@ -301,8 +301,8 @@ router.post('/logout', logout);
 // Product routes
 router.get('/products', getAllProducts);
 router.get('/product/:id', getProductById);
-router.post('/product', upload.single('image'), createProduct);
-
+// router.post('/product', upload.single('image'), createProduct);
+router.post("/product", upload.array("images", 10), createProduct);
 // router.post('/product', upload.array('images', 5), createProduct);
 
 router.put('/product/:id', upload.single('image'), updateProduct);

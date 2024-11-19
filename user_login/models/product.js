@@ -74,7 +74,11 @@ const productSchema = new mongoose.Schema({
         type: String,
         default: "No details available",
     },
-    image: { type: String, default: null },
+    // image: { type: String, default: null },
+    images: {
+        type: [String], // Array of strings for multiple image URLs
+        default: [],    // Default to an empty array
+    },
 });
 
 // module.exports = mongoose.model('Product', productSchema);
